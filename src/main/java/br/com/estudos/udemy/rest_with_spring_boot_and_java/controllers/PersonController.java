@@ -1,6 +1,6 @@
 package br.com.estudos.udemy.rest_with_spring_boot_and_java.controllers;
 
-import br.com.estudos.udemy.rest_with_spring_boot_and_java.PersonServices;
+import br.com.estudos.udemy.rest_with_spring_boot_and_java.services.PersonServices;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -18,7 +18,7 @@ public class PersonController {
 
     //@GetMapping
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)    //method = RequestMethod.GET == @GetMapping    MediaType do org.springframework.http.MediaType
-    public Person findById(@PathVariable("id") String id){
+    public Person findById(@PathVariable("id") Long id){
         return service.findById(id);
     }
     //@GetMapping
@@ -33,7 +33,7 @@ public class PersonController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
-        public void delete(@PathVariable String id){
+        public void delete(@PathVariable Long id){
         service.delete(id);
     }
 
