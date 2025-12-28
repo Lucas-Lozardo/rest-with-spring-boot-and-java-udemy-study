@@ -18,7 +18,7 @@ public class ObjectMapper {
     }
 
     //Lista de objetos, parse de List<DTO> -> List<ENTITY> e List<ENTITY> -> List<DTO>
-    public static <O, D> List<D> parseListObject(List<O> origin, Class<D> destination){
+    public static <O, D> List<D> parseListObjects(List<O> origin, Class<D> destination){
 
         List<D> destinationObjects = new ArrayList<D>();
         for (Object o : origin){
