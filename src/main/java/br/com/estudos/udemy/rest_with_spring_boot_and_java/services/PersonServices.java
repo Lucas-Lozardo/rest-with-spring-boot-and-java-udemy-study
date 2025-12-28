@@ -1,6 +1,8 @@
 package br.com.estudos.udemy.rest_with_spring_boot_and_java.services;
 
+import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.PersonDTO;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.exception.ResourceNotFoundException;
+import br.com.estudos.udemy.rest_with_spring_boot_and_java.mapper.ObjectMapper;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.model.Person;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.repository.PersonRepository;
 import org.slf4j.Logger;
@@ -23,33 +25,36 @@ public class PersonServices {
     private PersonRepository repo;
 
 
-    public List<Person> findAll(){
+    public List<PersonDTO> findAll(){
         logger.info("Finding all people!");
 
-        return repo.findAll();
+        return ObjectMapper.parseListObjects(repo.findAll(), PersonDTO.class);
     }
 
 
-    public Person findById(Long id){
+    public PersonDTO findById(Long id){
         logger.info("Finding one Person!");     //Aparece o log no Terminal.
 
-        return repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+        var entity = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+        return ObjectMapper.parseObject(entity, PersonDTO.class);
     }
 
-    public Person create(Person person){
+    public PersonDTO create(PersonDTO person){
         logger.info("Creating one person");
-        return repo.save(person);
+        var entity = ObjectMapper.parseObject(person, Person.class);
+        return ObjectMapper.parseObject(repo.save(entity), PersonDTO.class);
     }
 
-    public Person update(Person person){
+    public PersonDTO update(PersonDTO person){
         logger.info("Updating one person");
-        Person personLocalized = repo.findById(person.getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+        Person entity = repo.findById(person.getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
-        personLocalized.setFirstName(person.getFirstName());
-        personLocalized.setLastName(person.getLastName());
-        personLocalized.setAddress(person.getAddress());
-        personLocalized.setGender(person.getGender());
-        return repo.save(personLocalized);
+        entity.setFirstName(person.getFirstName());
+        entity.setLastName(person.getLastName());
+        entity.setAddress(person.getAddress());
+        entity.setGender(person.getGender());
+
+        return ObjectMapper.parseObject(repo.save(entity), PersonDTO.class);
     }
 
     public void delete(Long id){
