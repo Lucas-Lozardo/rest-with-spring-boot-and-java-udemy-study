@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("api/person")
 public class PersonController {
 
     @Autowired
@@ -25,13 +25,13 @@ public class PersonController {
     }
 
     //@GetMapping
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)    //method = RequestMethod.GET == @GetMapping    MediaType do org.springframework.http.MediaType
+    @GetMapping(value = "/v1/{id}", produces = MediaType.APPLICATION_JSON_VALUE)    //method = RequestMethod.GET == @GetMapping    MediaType do org.springframework.http.MediaType
     public PersonDTO findById(@PathVariable("id") Long id){
         return service.findById(id);
     }
 
     //@GetMapping
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)    //method = RequestMethod.POST == @PostMapping    MediaType do org.springframework.http.MediaType
+    @PostMapping(value = "/v1", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)    //method = RequestMethod.POST == @PostMapping    MediaType do org.springframework.http.MediaType
     public PersonDTO create(@RequestBody PersonDTO person){
         return service.create(person);
     }
@@ -42,12 +42,12 @@ public class PersonController {
         return service.createV2(person);
     }
 
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/v1", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public PersonDTO update(@RequestBody PersonDTO person){
         return service.update(person);
     }
 
-    @DeleteMapping
+    @DeleteMapping(value = "/v1")
         public ResponseEntity<?> delete(@PathVariable Long id){
         service.delete(id);
 
