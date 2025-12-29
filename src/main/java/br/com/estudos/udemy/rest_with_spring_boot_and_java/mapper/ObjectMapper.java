@@ -3,7 +3,6 @@ package br.com.estudos.udemy.rest_with_spring_boot_and_java.mapper;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 

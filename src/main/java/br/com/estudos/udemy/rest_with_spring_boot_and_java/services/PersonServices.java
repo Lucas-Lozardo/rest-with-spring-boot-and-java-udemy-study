@@ -1,8 +1,10 @@
 package br.com.estudos.udemy.rest_with_spring_boot_and_java.services;
 
-import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.PersonDTO;
+import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v1.PersonDTO;
+import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v2.PersonDTOV2;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.exception.ResourceNotFoundException;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.mapper.ObjectMapper;
+import br.com.estudos.udemy.rest_with_spring_boot_and_java.mapper.custom.PersonMapper;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.model.Person;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.repository.PersonRepository;
 import org.slf4j.Logger;
@@ -24,6 +26,9 @@ public class PersonServices {
     @Autowired
     private PersonRepository repo;
 
+    @Autowired
+    private PersonMapper converter;
+
 
     public List<PersonDTO> findAll(){
         logger.info("Finding all people!");
@@ -43,6 +48,12 @@ public class PersonServices {
         logger.info("Creating one person");
         var entity = ObjectMapper.parseObject(person, Person.class);
         return ObjectMapper.parseObject(repo.save(entity), PersonDTO.class);
+    }
+
+    public PersonDTOV2 createV2(PersonDTOV2 person){
+        logger.info("Creating one person V2");
+        var entity = converter.convertDTOV2ToEntity(person);
+        return converter.convertEntityToDTOV2(repo.save(entity));
     }
 
     public PersonDTO update(PersonDTO person){
