@@ -11,6 +11,7 @@ public class PersonMapper {
 
     public PersonDTOV2 convertEntityToDTOV2(Person person){
         PersonDTOV2 dtoV2 = new PersonDTOV2();
+        dtoV2.setId(person.getId());
         dtoV2.setFirstName(person.getFirstName());
         dtoV2.setLastName(person.getLastName());
         dtoV2.setBirthDay(new Date());
@@ -22,6 +23,7 @@ public class PersonMapper {
 
     public Person convertDTOV2ToEntity(PersonDTOV2 person){
         Person entity = new Person();
+        entity.setId(person.getId());
         entity.setFirstName(person.getFirstName());
         entity.setLastName(person.getLastName());
         //entity.setBirthDay(new Date());
