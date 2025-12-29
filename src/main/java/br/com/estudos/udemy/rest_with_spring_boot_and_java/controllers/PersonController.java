@@ -37,7 +37,7 @@ public class PersonController {
     }
 
     //VERSION 2
-    @PostMapping(name = "/v2", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)    //method = RequestMethod.POST == @PostMapping    MediaType do org.springframework.http.MediaType
+    @PostMapping(value = "/v2", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)    //method = RequestMethod.POST == @PostMapping    MediaType do org.springframework.http.MediaType
     public PersonDTOV2 createV2(@RequestBody PersonDTOV2 person){
         return service.createV2(person);
     }
