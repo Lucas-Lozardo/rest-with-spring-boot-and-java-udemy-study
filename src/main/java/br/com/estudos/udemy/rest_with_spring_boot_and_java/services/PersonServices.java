@@ -38,7 +38,13 @@ public class PersonServices {
     public List<PersonDTO> findAll(){
         logger.info("Finding all people!");
 
-        return ObjectMapper.parseListObjects(repo.findAll(), PersonDTO.class);
+        var persons = ObjectMapper.parseListObjects(repo.findAll(), PersonDTO.class);
+        persons.forEach(this::addHateoasLinks);
+
+        //OU
+        //persons.forEach(p -> addHateoasLinks(p));
+
+        return persons;
     }
 
 
@@ -49,7 +55,7 @@ public class PersonServices {
         var dto = ObjectMapper.parseObject(entity, PersonDTO.class);
 
         //ADD link HATEOAS, olhar final da classe. Import static.
-        addHateoasLinks(id, dto);
+        addHateoasLinks(dto);
 
         return dto;
     }
@@ -57,13 +63,17 @@ public class PersonServices {
     public PersonDTO create(PersonDTO person){
         logger.info("Creating one person");
         var entity = ObjectMapper.parseObject(person, Person.class);
-        return ObjectMapper.parseObject(repo.save(entity), PersonDTO.class);
+        var dto = ObjectMapper.parseObject(repo.save(entity), PersonDTO.class);
+        addHateoasLinks(dto);
+
+        return dto;
     }
 
     public PersonDTOV2 createV2(PersonDTOV2 person){
         logger.info("Creating one person V2");
         var entity = converter.convertDTOV2ToEntity(person);
         return converter.convertEntityToDTOV2(repo.save(entity));
+
     }
 
     public PersonDTO update(PersonDTO person){
@@ -75,21 +85,25 @@ public class PersonServices {
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
 
-        return ObjectMapper.parseObject(repo.save(entity), PersonDTO.class);
+        var dto = ObjectMapper.parseObject(repo.save(entity), PersonDTO.class);
+        addHateoasLinks(dto);
+
+        return dto;
     }
 
     public void delete(Long id){
         logger.info("Deleting one person");
         Person personLocalized = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
         repo.delete(personLocalized);
+
     }
 
     //ADD link HATEOAS, IMPORT teve que ser manualmente
-    private static void addHateoasLinks(Long id, PersonDTO dto) {
-        dto.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel().withType("GET"));
+    private void addHateoasLinks(PersonDTO dto) {
+        dto.add(linkTo(methodOn(PersonController.class).findById(dto.getId())).withSelfRel().withType("GET"));
         dto.add(linkTo(methodOn(PersonController.class).findAll()).withRel("findAll").withType("GET"));
         dto.add(linkTo(methodOn(PersonController.class).create(dto)).withRel("create").withType("POST"));
         dto.add(linkTo(methodOn(PersonController.class).update(dto)).withRel("update").withType("PUT"));
-        dto.add(linkTo(methodOn(PersonController.class).delete(id)).withRel("delete").withType("DELETE"));
+        dto.add(linkTo(methodOn(PersonController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
     }
 }
