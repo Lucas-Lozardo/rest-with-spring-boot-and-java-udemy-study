@@ -1,15 +1,16 @@
 package br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v1;
 
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.serializer.GenderSerializer;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+//Ordem que será exibido no Response.
 @JsonPropertyOrder({"id", "first_name", "last_name", "address", "gender"})
+//Filtro para selecionar o que não será mostrado no Response do DTO.
+//@JsonFilter("PersonFilter") //Conflita com xml na serialização.
 public class PersonDTO implements Serializable {
 
 
@@ -22,10 +23,16 @@ public class PersonDTO implements Serializable {
     private String firstName;
 
     @JsonProperty("last_name")
+    //Campo só aparece se não estiver nulo
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String lastName;
 
     //@JsonFormat(pattern = "dd/MM/yyyy")
     //private Date birthDay;
+
+    //Campo só aparece se não estiver nulo e vazia
+    //@JsonInclude(JsonInclude.Include.NON_EMPTY)
+    //private String phoneNumber;
 
     private String address;
 
@@ -34,6 +41,9 @@ public class PersonDTO implements Serializable {
     //Para substituir a resposta do campo Gender por M ou F.
     @JsonSerialize(using = GenderSerializer.class)
     private String gender;
+
+    //Filtro para selecionar o que não será mostrado no Response do DTO.
+    //private String sensitiveData;
 
     public PersonDTO() {
     }

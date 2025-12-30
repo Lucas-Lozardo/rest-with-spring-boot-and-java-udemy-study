@@ -19,30 +19,36 @@ public class PersonController {
     //private PersonServices service = new PersonServices();
 
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/v1/", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public List<PersonDTO> findAll(){
         return service.findAll();
     }
 
     //@GetMapping
-    @GetMapping(value = "/v1/{id}", produces = MediaType.APPLICATION_JSON_VALUE)    //method = RequestMethod.GET == @GetMapping    MediaType do org.springframework.http.MediaType
+    @GetMapping(value = "/v1/{id}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })    //method = RequestMethod.GET == @GetMapping    MediaType do org.springframework.http.MediaType
     public PersonDTO findById(@PathVariable("id") Long id){
         return service.findById(id);
     }
 
     //@GetMapping
-    @PostMapping(value = "/v1", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)    //method = RequestMethod.POST == @PostMapping    MediaType do org.springframework.http.MediaType
+    @PostMapping(value = "/v1",
+            consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE },
+            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })    //method = RequestMethod.POST == @PostMapping    MediaType do org.springframework.http.MediaType
     public PersonDTO create(@RequestBody PersonDTO person){
         return service.create(person);
     }
 
     //VERSION 2
-    @PostMapping(value = "/v2", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)    //method = RequestMethod.POST == @PostMapping    MediaType do org.springframework.http.MediaType
+    @PostMapping(value = "/v2",
+            consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE },
+            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public PersonDTOV2 createV2(@RequestBody PersonDTOV2 person){
         return service.createV2(person);
     }
 
-    @PutMapping(value = "/v1", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/v1",
+            consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE },
+            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
     public PersonDTO update(@RequestBody PersonDTO person){
         return service.update(person);
     }
