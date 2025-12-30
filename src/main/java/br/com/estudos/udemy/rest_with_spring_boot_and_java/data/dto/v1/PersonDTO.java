@@ -1,8 +1,10 @@
 package br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v1;
 
+import br.com.estudos.udemy.rest_with_spring_boot_and_java.serializer.GenderSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -29,6 +31,8 @@ public class PersonDTO implements Serializable {
 
     //Para não renderizar/mostrar
     @JsonIgnore
+    //Para substituir a resposta do campo Gender por M ou F.
+    @JsonSerialize(using = GenderSerializer.class)
     private String gender;
 
     public PersonDTO() {
