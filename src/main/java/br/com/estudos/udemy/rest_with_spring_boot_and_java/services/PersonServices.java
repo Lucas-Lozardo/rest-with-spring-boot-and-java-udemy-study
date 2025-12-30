@@ -1,5 +1,6 @@
 package br.com.estudos.udemy.rest_with_spring_boot_and_java.services;
 
+import br.com.estudos.udemy.rest_with_spring_boot_and_java.controllers.PersonController;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v1.PersonDTO;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v2.PersonDTOV2;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.exception.ResourceNotFoundException;
@@ -10,6 +11,9 @@ import br.com.estudos.udemy.rest_with_spring_boot_and_java.repository.PersonRepo
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,7 +46,12 @@ public class PersonServices {
         logger.info("Finding one Person!");     //Aparece o log no Terminal.
 
         var entity = repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
-        return ObjectMapper.parseObject(entity, PersonDTO.class);
+        var dto = ObjectMapper.parseObject(entity, PersonDTO.class);
+
+        //ADD link HATEOAS, IMPORT teve que ser manualmente
+        dto.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel().withType("GET"));
+
+        return dto;
     }
 
     public PersonDTO create(PersonDTO person){

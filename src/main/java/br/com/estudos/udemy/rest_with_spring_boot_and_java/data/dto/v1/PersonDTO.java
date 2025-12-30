@@ -3,6 +3,7 @@ package br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v1;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.serializer.GenderSerializer;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -11,7 +12,8 @@ import java.util.Objects;
 @JsonPropertyOrder({"id", "first_name", "last_name", "address", "gender"})
 //Filtro para selecionar o que não será mostrado no Response do DTO.
 //@JsonFilter("PersonFilter") //Conflita com xml na serialização.
-public class PersonDTO implements Serializable {
+//extends RepresentationModel<PersonDTO> para o HATEOAS
+public class PersonDTO extends RepresentationModel<PersonDTO> implements Serializable {
 
 
     private static final long serialVersionUID = 1L;
