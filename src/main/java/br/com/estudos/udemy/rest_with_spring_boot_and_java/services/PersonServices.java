@@ -17,13 +17,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 
 
 @Service
 public class PersonServices {
 
-    private final AtomicLong counter = new AtomicLong();
 
     private Logger logger = LoggerFactory.getLogger(PersonServices.class.getName());
 
@@ -100,10 +98,27 @@ public class PersonServices {
 
     //ADD link HATEOAS, IMPORT teve que ser manualmente
     private void addHateoasLinks(PersonDTO dto) {
-        dto.add(linkTo(methodOn(PersonController.class).findById(dto.getId())).withSelfRel().withType("GET"));
-        dto.add(linkTo(methodOn(PersonController.class).findAll()).withRel("findAll").withType("GET"));
-        dto.add(linkTo(methodOn(PersonController.class).create(dto)).withRel("create").withType("POST"));
-        dto.add(linkTo(methodOn(PersonController.class).update(dto)).withRel("update").withType("PUT"));
-        dto.add(linkTo(methodOn(PersonController.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
+        dto.add(linkTo(PersonController.class)
+                .slash(dto.getId())
+                .withSelfRel()
+                .withType("GET"));
+
+        dto.add(linkTo(PersonController.class)
+                .withRel("findAll")
+                .withType("GET"));
+
+        dto.add(linkTo(PersonController.class)
+                .withRel("create")
+                .withType("POST"));
+
+        dto.add(linkTo(PersonController.class)
+                .slash(dto.getId())
+                .withRel("update")
+                .withType("PUT"));
+
+        dto.add(linkTo(PersonController.class)
+                .slash(dto.getId())
+                .withRel("delete")
+                .withType("DELETE"));
     }
 }

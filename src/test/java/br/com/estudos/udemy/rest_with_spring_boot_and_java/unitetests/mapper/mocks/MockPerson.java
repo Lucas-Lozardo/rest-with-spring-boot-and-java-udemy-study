@@ -2,10 +2,11 @@ package br.com.estudos.udemy.rest_with_spring_boot_and_java.unitetests.mapper.mo
 
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v1.PersonDTO;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.model.Person;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class MockPerson {
 
