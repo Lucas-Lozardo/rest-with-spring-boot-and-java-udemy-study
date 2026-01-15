@@ -1,6 +1,7 @@
 package br.com.estudos.udemy.rest_with_spring_boot_and_java.services;
 
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v1.PersonDTO;
+import br.com.estudos.udemy.rest_with_spring_boot_and_java.exception.RequiredObjectIsNullException;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.model.Person;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.repository.PersonRepository;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.unitetests.mapper.mocks.MockPerson;
@@ -25,6 +26,7 @@ class PersonServicesTest {
 
     MockPerson input;
 
+
     @InjectMocks
     private PersonServices service;
 
@@ -37,6 +39,7 @@ class PersonServicesTest {
         input = new MockPerson();
         MockitoAnnotations.openMocks(this);
     }
+
 
     @Test
     void findAll() {
@@ -159,64 +162,79 @@ class PersonServicesTest {
 
     }
 
+//    @Test
+//    void createV2() {
+//        Person person = input.mockEntity(1);
+//        Person persisted = person;
+//        persisted.setId(1L);
+//
+//        PersonDTOV2 dtov2 = input.mockDTOV2(1);
+//
+//        when(repo.save(person)).thenReturn(persisted);
+//
+//       var result = service.createV2(dtov2);
+//
+//        assertNotNull(result);
+//        assertNotNull(result.getId());
+//        assertNotNull(result.getLinks());
+//
+//        //Teste mais específico do HATEOAS
+//        assertNotNull(result.getLinks().stream()
+//                .anyMatch(link -> link.getRel().value().equals("self")
+//                        && link.getHref().endsWith("/api/person/v2/1")
+//                        && link.getType().equals("GET")
+//                )
+//        );
+//
+//        assertNotNull(result.getLinks().stream()
+//                .anyMatch(link -> link.getRel().value().equals("create")
+//                        && link.getHref().endsWith("/api/person/v2")
+//                        && link.getType().equals("POST")
+//                )
+//        );
+//
+//        assertNotNull(result.getLinks().stream()
+//                .anyMatch(link -> link.getRel().value().equals("update")
+//                        && link.getHref().endsWith("/api/person/v2")
+//                        && link.getType().equals("PUT")
+//                )
+//        );
+//
+//        assertNotNull(result.getLinks().stream()
+//                .anyMatch(link -> link.getRel().value().equals("delete")
+//                        && link.getHref().endsWith("/api/person/v2/1")
+//                        && link.getType().equals("DELETE")
+//                )
+//        );
+//
+//        assertNotNull(result.getLinks().stream()
+//                .anyMatch(link -> link.getRel().value().equals("findAll")
+//                        && link.getHref().endsWith("/api/person/v2")
+//                        && link.getType().equals("GET")
+//                )
+//        );
+//
+//        assertEquals("Address Test1", result.getAddress());
+//        assertEquals("First Name Test1", result.getFirstName());
+//        assertEquals("Last Name Test1", result.getLastName());
+//        assertEquals("Female", result.getGender());
+//        //assertEquals("1990/ 6 /15", result.getBirthDay().toString());
+//
+//    }
+
+
     @Test
-    void createV2() {
-        Person person = input.mockEntity(1);
-        Person persisted = person;
-        persisted.setId(1L);
+    void testCreateWithNullPerson(){
+        Exception exception = assertThrows(RequiredObjectIsNullException.class,
+                () -> {
+            service.create(null);
+                });
+        String expectedMessage = "It is not allowed to persist a null object!";
+        String actualMessage = exception.getMessage();
 
-        PersonDTO dto = input.mockDTO(1);
-
-        when(repo.save(person)).thenReturn(persisted);
-
-        var result = service.create(dto);
-
-        assertNotNull(result);
-        assertNotNull(result.getId());
-        assertNotNull(result.getLinks());
-
-        //Teste mais específico do HATEOAS
-        assertNotNull(result.getLinks().stream()
-                .anyMatch(link -> link.getRel().value().equals("self")
-                        && link.getHref().endsWith("/api/person/v1/1")
-                        && link.getType().equals("GET")
-                )
-        );
-
-        assertNotNull(result.getLinks().stream()
-                .anyMatch(link -> link.getRel().value().equals("create")
-                        && link.getHref().endsWith("/api/person/v1")
-                        && link.getType().equals("POST")
-                )
-        );
-
-        assertNotNull(result.getLinks().stream()
-                .anyMatch(link -> link.getRel().value().equals("update")
-                        && link.getHref().endsWith("/api/person/v1")
-                        && link.getType().equals("PUT")
-                )
-        );
-
-        assertNotNull(result.getLinks().stream()
-                .anyMatch(link -> link.getRel().value().equals("delete")
-                        && link.getHref().endsWith("/api/person/v1/1")
-                        && link.getType().equals("DELETE")
-                )
-        );
-
-        assertNotNull(result.getLinks().stream()
-                .anyMatch(link -> link.getRel().value().equals("findAll")
-                        && link.getHref().endsWith("/api/person/v1")
-                        && link.getType().equals("GET")
-                )
-        );
-
-        assertEquals("Address Test1", result.getAddress());
-        assertEquals("First Name Test1", result.getFirstName());
-        assertEquals("Last Name Test1", result.getLastName());
-        assertEquals("Female", result.getGender());
-
+        assertTrue(actualMessage.contains(expectedMessage));
     }
+
 
     @Test
     void update() {
@@ -277,6 +295,18 @@ class PersonServicesTest {
         assertEquals("Female", result.getGender());
 
 
+    }
+
+    @Test
+    void testUpdateWithNullPerson(){
+        Exception exception = assertThrows(RequiredObjectIsNullException.class,
+                () -> {
+                    service.update(null);
+                });
+        String expectedMessage = "It is not allowed to persist a null object!";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @Test

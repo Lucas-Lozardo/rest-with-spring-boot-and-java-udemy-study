@@ -1,11 +1,13 @@
 package br.com.estudos.udemy.rest_with_spring_boot_and_java.unitetests.mapper.mocks;
 
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v1.PersonDTO;
+import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v2.PersonDTOV2;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.model.Person;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.springframework.cglib.core.Local;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MockPerson {
@@ -55,4 +57,14 @@ public class MockPerson {
         return person;
     }
 
+    public PersonDTOV2 mockDTOV2(Integer number) {
+        PersonDTOV2 person = new PersonDTOV2();
+        person.setAddress("Address Test" + number);
+        person.setFirstName("First Name Test" + number);
+        person.setGender(((number % 2)==0) ? "Male" : "Female");
+        person.setId(number.longValue());
+        person.setLastName("Last Name Test" + number);
+        //person.setBirthDay(new Date(1990/ 6 /15));
+        return person;
+    }
 }

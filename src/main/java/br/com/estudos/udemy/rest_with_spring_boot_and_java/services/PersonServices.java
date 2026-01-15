@@ -3,6 +3,7 @@ package br.com.estudos.udemy.rest_with_spring_boot_and_java.services;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.controllers.PersonController;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v1.PersonDTO;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v2.PersonDTOV2;
+import br.com.estudos.udemy.rest_with_spring_boot_and_java.exception.RequiredObjectIsNullException;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.exception.ResourceNotFoundException;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.mapper.ObjectMapper;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.mapper.custom.PersonMapper;
@@ -59,6 +60,9 @@ public class PersonServices {
     }
 
     public PersonDTO create(PersonDTO person){
+
+        if (person == null) throw new RequiredObjectIsNullException();
+
         logger.info("Creating one person");
         var entity = ObjectMapper.parseObject(person, Person.class);
         var dto = ObjectMapper.parseObject(repo.save(entity), PersonDTO.class);
@@ -68,6 +72,8 @@ public class PersonServices {
     }
 
     public PersonDTOV2 createV2(PersonDTOV2 person){
+        if (person == null) throw new RequiredObjectIsNullException();
+
         logger.info("Creating one person V2");
         var entity = converter.convertDTOV2ToEntity(person);
         return converter.convertEntityToDTOV2(repo.save(entity));
@@ -75,6 +81,9 @@ public class PersonServices {
     }
 
     public PersonDTO update(PersonDTO person){
+
+        if (person == null) throw new RequiredObjectIsNullException();
+
         logger.info("Updating one person");
         Person entity = repo.findById(person.getId()).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
