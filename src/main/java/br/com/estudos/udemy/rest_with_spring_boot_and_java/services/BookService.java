@@ -37,7 +37,7 @@ public class BookService {
 
     public BookDTO findById(Long id){
 
-        logger.info("Finding one person");
+        logger.info("Finding one book");
 
         var entity = repo.findById(id).orElseThrow(()-> new ResourceNotFoundException("No records found for this ID!"));
         var dto = ObjectMapper.parseObject(entity, BookDTO.class);

@@ -23,11 +23,15 @@ public class Book implements Serializable {
     private String author;
 
     @Column(name = "launch_date", nullable = false)
+    @Temporal(TemporalType.DATE)
     private Date launchDate;
 
     @NotNull
     private BigDecimal price;
+
+    @Column(nullable = false, length = 250)
     private String title;
+
 
     public Book(){
     }

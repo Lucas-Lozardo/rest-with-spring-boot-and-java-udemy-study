@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 public interface BookControllerDocs {
-    @Operation(summary = "Find All People", description = "Find all People", tags = {"Book"}, responses = {
+    @Operation(summary = "Find All Books", description = "Find all Books", tags = {"Book"}, responses = {
             @ApiResponse(description = "Success", responseCode = "200", content = {
                     @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE,
@@ -29,7 +29,7 @@ public interface BookControllerDocs {
     })
     List<BookDTO> findAll();
 
-    @Operation(summary = "Find a Person", description = "Find a Specific Book by your ID", tags = {"Book"}, responses = {
+    @Operation(summary = "Find a Book", description = "Find a Specific Book by your ID", tags = {"Book"}, responses = {
             @ApiResponse(description = "Success", responseCode = "200",
                     content = @Content(schema = @Schema(implementation = BookDTO.class))
             ),

@@ -24,7 +24,7 @@ public class BookController implements BookControllerDocs {
         return service.findAll();
     }
 
-    @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
+    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
     public BookDTO findById(@PathVariable Long id){
         return service.findById(id);
     }
