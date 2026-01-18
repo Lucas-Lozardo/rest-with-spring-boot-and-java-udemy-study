@@ -17,9 +17,9 @@ import java.util.List;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @Service
-public class BookService {
+public class BookServices {
 
-    private Logger logger = LoggerFactory.getLogger(BookService.class.getName());
+    private Logger logger = LoggerFactory.getLogger(BookServices.class.getName());
 
     @Autowired
     private BookRepository repo;

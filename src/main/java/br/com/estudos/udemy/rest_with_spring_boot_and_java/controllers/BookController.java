@@ -2,7 +2,7 @@ package br.com.estudos.udemy.rest_with_spring_boot_and_java.controllers;
 
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.controllers.docs.BookControllerDocs;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v1.BookDTO;
-import br.com.estudos.udemy.rest_with_spring_boot_and_java.services.BookService;
+import br.com.estudos.udemy.rest_with_spring_boot_and_java.services.BookServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import java.util.List;
 public class BookController implements BookControllerDocs {
 
     @Autowired
-    private BookService service;
+    private BookServices service;
 
 
     @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
