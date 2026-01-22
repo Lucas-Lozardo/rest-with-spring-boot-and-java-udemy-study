@@ -1,4 +1,4 @@
-package br.com.estudos.udemy.rest_with_spring_boot_and_java.services;
+package br.com.estudos.udemy.rest_with_spring_boot_and_java.unittests.services;
 
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.controllers.BookController;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v1.BookDTO;

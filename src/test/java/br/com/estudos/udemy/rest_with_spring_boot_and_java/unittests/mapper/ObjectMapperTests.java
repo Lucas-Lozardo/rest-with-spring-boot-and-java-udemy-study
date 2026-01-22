@@ -1,4 +1,4 @@
-package br.com.estudos.udemy.rest_with_spring_boot_and_java.unitetests.mapper;
+package br.com.estudos.udemy.rest_with_spring_boot_and_java.unittests.mapper;
 
 import static br.com.estudos.udemy.rest_with_spring_boot_and_java.mapper.ObjectMapper.parseListObjects;
 import static br.com.estudos.udemy.rest_with_spring_boot_and_java.mapper.ObjectMapper.parseObject;
@@ -9,7 +9,7 @@ import java.util.List;
 
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v1.PersonDTO;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.model.Person;
-import br.com.estudos.udemy.rest_with_spring_boot_and_java.unitetests.mapper.mocks.MockPerson;
+import br.com.estudos.udemy.rest_with_spring_boot_and_java.unittests.mapper.mocks.MockPerson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

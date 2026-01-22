@@ -3,7 +3,7 @@ package br.com.estudos.udemy.rest_with_spring_boot_and_java.controllers;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.controllers.docs.PersonControllerDocs;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v1.PersonDTO;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v2.PersonDTOV2;
-import br.com.estudos.udemy.rest_with_spring_boot_and_java.services.PersonServices;
+import br.com.estudos.udemy.rest_with_spring_boot_and_java.unittests.services.PersonServices;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

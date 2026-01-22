@@ -1,4 +1,4 @@
-package br.com.estudos.udemy.rest_with_spring_boot_and_java.unitetests.mapper.mocks;
+package br.com.estudos.udemy.rest_with_spring_boot_and_java.unittests.mapper.mocks;
 
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v1.BookDTO;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.model.Book;
