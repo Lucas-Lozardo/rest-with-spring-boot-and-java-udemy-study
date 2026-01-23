@@ -1,12 +1,32 @@
 package br.com.estudos.udemy.rest_with_spring_boot_and_java.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+
+    //AO RODAR O SPRING SERÁ SETADO ESSA STRING COM O ATRIBUTO CORS DO APPLICATION.YML
+    @Value("${cors.originPatterns}")
+    private String corsOriginPatterns = "";
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        var allowedOrigins = corsOriginPatterns.split(",");
+
+        //REGRAS DE MAPEAMENTO DO CORS
+        registry.addMapping("/**")
+                .allowedOrigins(allowedOrigins)
+                //OS VERBOS QUE IRÁ PERMITIR ACESSAR
+                //.allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+                //TODOS OS VERBOS
+                .allowedMethods("*")
+                .allowCredentials(true);
+    }
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {

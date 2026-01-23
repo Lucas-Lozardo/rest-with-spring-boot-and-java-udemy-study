@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//CORS GLOBAL NO CONTROLLER, NÃO SUGERIDO
+//@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("api/person")
 @Tag(name = "People", description = "Endpoints for Managing People")
@@ -28,14 +30,14 @@ public class PersonController implements PersonControllerDocs {
         return service.findAll();
     }
 
-
     @GetMapping(value = "/v1/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
     @Override
     public PersonDTO findById(@PathVariable("id") Long id){
         return service.findById(id);
     }
 
-
+    //PARA ACRESCENTAR MAIS DE UM CAMINHO UTILIZAR O {"", ""}
+    //@CrossOrigin(origins = "http://localhost:8080")
     @PostMapping(value = "/v1",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
