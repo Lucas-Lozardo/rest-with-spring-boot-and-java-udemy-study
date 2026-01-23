@@ -40,7 +40,7 @@ public class PersonDTO extends RepresentationModel<PersonDTO> implements Seriali
     private String address;
 
     //Para não renderizar/mostrar
-    @JsonIgnore
+    //@JsonIgnore
     //Para substituir a resposta do campo Gender por M ou F.
     @JsonSerialize(using = GenderSerializer.class)
     private String gender;

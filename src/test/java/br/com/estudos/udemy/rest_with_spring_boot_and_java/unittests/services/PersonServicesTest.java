@@ -4,6 +4,7 @@ import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v1.PersonDTO
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.exception.RequiredObjectIsNullException;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.model.Person;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.repository.PersonRepository;
+import br.com.estudos.udemy.rest_with_spring_boot_and_java.services.PersonServices;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.unittests.mapper.mocks.MockPerson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
