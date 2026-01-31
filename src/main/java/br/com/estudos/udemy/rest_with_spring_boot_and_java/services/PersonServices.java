@@ -9,6 +9,7 @@ import br.com.estudos.udemy.rest_with_spring_boot_and_java.mapper.ObjectMapper;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.mapper.custom.PersonMapper;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.model.Person;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.repository.PersonRepository;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,6 +105,19 @@ public class PersonServices {
 
     }
 
+    @Transactional
+    public PersonDTO disablePerson(Long id) {
+        logger.info("Disabling one person");
+        repo.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+        repo.disablePerson(id);
+
+        var entity = repo.findById(id).get();
+
+        var dto = ObjectMapper.parseObject(entity, PersonDTO.class);
+        addHateoasLinks(dto);
+        return dto;
+    }
+
     //ADD link HATEOAS, IMPORT teve que ser manualmente
     private void addHateoasLinks(PersonDTO dto) {
         dto.add(linkTo(PersonController.class)
@@ -123,6 +137,11 @@ public class PersonServices {
                 .slash(dto.getId())
                 .withRel("update")
                 .withType("PUT"));
+
+        dto.add(linkTo(PersonController.class)
+                .slash(dto.getId())
+                .withRel("disable")
+                .withType("PATCH"));
 
         dto.add(linkTo(PersonController.class)
                 .slash(dto.getId())
