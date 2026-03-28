@@ -1,15 +1,12 @@
 package br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v2;
 
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v1.PersonDTO;
-import br.com.estudos.udemy.rest_with_spring_boot_and_java.serializer.GenderSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
 
@@ -30,7 +27,7 @@ public class PersonDTOV2 extends RepresentationModel<PersonDTO> implements Seria
     private String address;
 
     @JsonIgnore
-    @JsonSerialize(using = GenderSerializer.class)
+//    @JsonSerialize(using = GenderSerializer.class)
     private String gender;
     private Date birthDay;
 

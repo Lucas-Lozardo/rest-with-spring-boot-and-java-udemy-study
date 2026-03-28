@@ -1,8 +1,6 @@
 package br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v1;
 
-import br.com.estudos.udemy.rest_with_spring_boot_and_java.serializer.GenderSerializer;
 import com.fasterxml.jackson.annotation.*;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serial;
@@ -42,7 +40,7 @@ public class PersonDTO extends RepresentationModel<PersonDTO> implements Seriali
     //Para não renderizar/mostrar
     //@JsonIgnore
     //Para substituir a resposta do campo Gender por M ou F.
-    @JsonSerialize(using = GenderSerializer.class)
+//    @JsonSerialize(using = GenderSerializer.class)
     private String gender;
 
     private Boolean enabled;
