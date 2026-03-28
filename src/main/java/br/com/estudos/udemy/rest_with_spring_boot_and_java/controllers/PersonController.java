@@ -72,7 +72,7 @@ public class PersonController implements PersonControllerDocs {
         return service.disablePerson(id);
     }
 
-    @DeleteMapping(value = "/v1")
+    @DeleteMapping(value = "/v1/{id}")
     @Override
     public ResponseEntity<?> delete(@PathVariable Long id){
         service.delete(id);
