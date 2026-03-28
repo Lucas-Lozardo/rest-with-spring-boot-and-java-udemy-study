@@ -5,6 +5,7 @@ import br.com.estudos.udemy.rest_with_spring_boot_and_java.config.TestConfigs;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.integrationtests.dto.PersonDTO;
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.integrationtests.testcontainers.AbstractIntegrationTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.builder.RequestSpecBuilder;
@@ -15,6 +16,8 @@ import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
@@ -189,5 +192,35 @@ class PersonControllerJsonTest extends AbstractIntegrationTest {
         personDTO.setGender("Male");
         personDTO.setEnabled(true);
 
+    }
+
+    @Test
+    @Order(6)
+    void findAllTest() throws JsonProcessingException {
+
+        var content = given(specification)
+                    .accept(MediaType.APPLICATION_JSON_VALUE)
+                .when()
+                    .get()
+                .then()
+                    .statusCode(200)
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .extract()
+                    .body()
+                        .asString();
+
+        List<PersonDTO> people = objectMapper.readValue(content, new TypeReference<List<PersonDTO>>() {});
+
+        PersonDTO personOne = people.get(0);
+        personDTO = personOne;
+
+        assertNotNull(personOne.getId());
+        assertTrue(personOne.getId() > 0);
+
+        assertEquals("Ayrton", personOne.getFirstName());
+        assertEquals("Senna", personOne.getLastName());
+        assertEquals("São Paulo - Brasil", personOne.getAddress());
+        assertEquals("Male", personOne.getGender());
+        assertTrue(personOne.getEnabled());
     }
 }
