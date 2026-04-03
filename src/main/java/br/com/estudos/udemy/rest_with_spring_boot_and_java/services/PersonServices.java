@@ -15,10 +15,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Service;
 
 
@@ -31,12 +33,15 @@ public class PersonServices {
     @Autowired
     private PersonRepository repo;
 
+    @Autowired
+    private PagedResourcesAssembler<PersonDTO> assembler; //Para adicionar os links do HAL Paginação.
+
     //PersonDTOV2
     @Autowired
     private PersonMapper converter;
 
 
-    public Page<PersonDTO> findAll(Pageable pageable){
+    public PagedModel<EntityModel<PersonDTO>> findAll(Pageable pageable){
         logger.info("Finding all people!");
 
         //Implementando o page
@@ -48,7 +53,16 @@ public class PersonServices {
             return dto;
         });
 
-        return peopleWithLinks;
+        //Links do Pageable
+        Link findAllLink = WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(PersonController.class)
+                        .findAll(
+                                pageable.getPageNumber(),
+                                pageable.getPageSize(),
+                                String.valueOf(pageable.getSort())))
+                        .withSelfRel();
+
+        return assembler.toModel(peopleWithLinks, findAllLink);
     }
 
 

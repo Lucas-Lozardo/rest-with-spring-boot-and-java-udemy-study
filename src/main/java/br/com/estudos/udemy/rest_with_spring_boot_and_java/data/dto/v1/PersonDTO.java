@@ -3,6 +3,7 @@ package br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v1;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import org.springframework.hateoas.RepresentationModel;
+import org.springframework.hateoas.server.core.Relation;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.util.Objects;
 //Filtro para selecionar o que não será mostrado no Response do DTO.
 //@JsonFilter("PersonFilter") //Conflita com xml na serialização.
 //extends RepresentationModel<PersonDTO> para o HATEOAS
+@Relation(collectionRelation = "people") //Para alterar como aparece no HATEOS HAL page
 public class PersonDTO extends RepresentationModel<PersonDTO> implements Serializable {
 
     @Serial
