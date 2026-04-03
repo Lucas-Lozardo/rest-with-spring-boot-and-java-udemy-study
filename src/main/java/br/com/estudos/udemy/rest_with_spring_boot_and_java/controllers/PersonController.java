@@ -6,11 +6,12 @@ import br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v2.PersonDTO
 import br.com.estudos.udemy.rest_with_spring_boot_and_java.services.PersonServices;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 //CORS GLOBAL NO CONTROLLER, NÃO SUGERIDO
 //@CrossOrigin(origins = "http://localhost:8080")
@@ -25,9 +26,13 @@ public class PersonController implements PersonControllerDocs {
 
 
     @GetMapping(value = "/v1", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
-    @Override       /// para o implements
-    public List<PersonDTO> findAll(){
-        return service.findAll();
+    @Override       // para o implements
+    public ResponseEntity<Page<PersonDTO>> findAll(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "size", defaultValue = "12") Integer size
+    ){
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(service.findAll(pageable));
     }
 
     @GetMapping(value = "/v1/{id}", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})

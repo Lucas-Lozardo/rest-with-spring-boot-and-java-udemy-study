@@ -1,6 +1,7 @@
 package br.com.estudos.udemy.rest_with_spring_boot_and_java.data.dto.v1;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serial;

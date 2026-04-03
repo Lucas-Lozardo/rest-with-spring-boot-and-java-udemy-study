@@ -15,9 +15,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 
 @Service
@@ -34,16 +36,19 @@ public class PersonServices {
     private PersonMapper converter;
 
 
-    public List<PersonDTO> findAll(){
+    public Page<PersonDTO> findAll(Pageable pageable){
         logger.info("Finding all people!");
 
-        var persons = ObjectMapper.parseListObjects(repo.findAll(), PersonDTO.class);
-        persons.forEach(this::addHateoasLinks);
+        //Implementando o page
+        var people = repo.findAll(pageable);
 
-        //OU
-        //persons.forEach(p -> addHateoasLinks(p));
+        var peopleWithLinks = people.map(person -> {
+            var dto = ObjectMapper.parseObject(person, PersonDTO.class);
+            addHateoasLinks(dto);
+            return dto;
+        });
 
-        return persons;
+        return peopleWithLinks;
     }
 
 

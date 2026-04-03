@@ -1,12 +1,12 @@
 package br.com.estudos.udemy.rest_with_spring_boot_and_java.integrationtests.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
+import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
 import java.util.Objects;
 
-
+@XmlRootElement
 public class PersonDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
